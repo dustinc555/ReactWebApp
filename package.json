@@ -1,0 +1,24 @@
+{
+  "name": "nodejs_site",
+  "version": "1.0.0",
+  "description": "Demo web site using nodejs as a back-end language.",
+  "main": "myfirst.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dustinc555/ReactWebApp.git"
+  },
+  "author": "Dustin Cook",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dustinc555/ReactWebApp/issues"
+  },
+  "homepage": "https://github.com/dustinc555/ReactWebApp#readme",
+
+  "dependencies" : {
+      "express" : "latest",
+      "async" : "latest"
+  }
+}
