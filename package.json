@@ -19,6 +19,11 @@
 
   "dependencies" : {
       "express" : "latest",
-      "async" : "latest"
+      "react" : "latest",
+      "async" : "latest",
+      "validator" : "latest",
+      "body-parser" : "latest",
+      "cookie-parser" : "latest",
+      "multer" : "latest"
   }
 }
