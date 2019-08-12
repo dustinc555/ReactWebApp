@@ -11,7 +11,6 @@ export default class CNav extends React.Component {
         <Nav className="mr-auto">
           <Nav.Link href="/Play">Play</Nav.Link>
           <Nav.Link href="/Upload">Upload</Nav.Link>
-          <Nav.Link href="/List">List</Nav.Link>
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
