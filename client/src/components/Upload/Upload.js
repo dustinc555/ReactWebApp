@@ -1,7 +1,6 @@
 import React from "react";
-import { Form, FormControl, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
-import settings from "../../services";
 import mysql from "mysql";
 
 export default class UploadForm extends React.Component {
@@ -40,22 +39,7 @@ export default class UploadForm extends React.Component {
   }
 
   onFormSubmit(e) {
-    // insert title and author into db
-    let connection = mysql.createConnection(settings);
-    connection.connect();
-    var newSong = {
-      title: this.state.title,
-      author: this.state.author
-    };
-
-    let sql = "INSERT INTO trn_employee SET ?";
-    connection.query(sql, newSong, (err, result) => {
-      console.log("song id: " + result.insertId);
-    });
-    connection.end();
-    // give static files a name corresponding to id
-
-    // clear state
+    // send post request to proxy
   }
 
   render() {
