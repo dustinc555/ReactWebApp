@@ -5,23 +5,44 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
-
 var songRouter = require("./routes/song");
 
+var cors = require("cors");
+
+const fileUpload = require("express-fileupload");
+
 var app = express();
+
+// cors middleware for devlopment server
+app.use(cors());
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
 app.use(logger("dev"));
-app.use(express.json());
+
+// Will need a better solution for CORS in the future
+// this tells express to parse text/plain requests as JSON
+app.use(
+  express.json({
+    type: ["application/json"]
+  })
+);
+
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(fileUpload());
 
-app.use("/", indexRouter);
+app.use(express.static(path.join(__dirname, "client/build")));
+app.use("/images", express.static(path.join(__dirname, "static/images")));
+app.use("/songs", express.static(path.join(__dirname, "static/songs")));
+
 app.use("/api/song", songRouter);
+
+app.get("/*", function(req, res) {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

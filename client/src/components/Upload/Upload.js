@@ -1,53 +1,67 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
-import ImageUploader from "react-images-upload";
-import mysql from "mysql";
+import { Form } from "react-bootstrap";
 
+/** UploadForm
+ * Keeps react state as the single source of truth by updating the state
+ * every time elements of the form are changed.
+ */
 export default class UploadForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { author: "", title: "", img: null, song: null };
+    this.state = {
+      artist: "",
+      title: "",
+      img: null,
+      song: null,
+      loadingSong: false,
+      loadingImg: false
+    };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onTitleChange = this.onTitleChange.bind(this);
-    this.onAuthorChange = this.onAuthorChange.bind(this);
+    this.onArtistChange = this.onArtistChange.bind(this);
     this.onImgChange = this.onImgChange.bind(this);
     this.onSongChange = this.onSongChange.bind(this);
   }
 
   onTitleChange(e) {
-    console.log("title changed");
     this.setState({ title: e.target.value });
-    console.log(this.state);
   }
 
-  onAuthorChange(e) {
-    console.log("author changed");
-    this.setState({ author: e.target.value });
-    console.log(this.state);
-  }
-
-  onImgChange(img) {
-    console.log("img changed");
-    this.setState({ img: img });
-    console.log(this.state);
+  onArtistChange(e) {
+    this.setState({ artist: e.target.value });
   }
 
   onSongChange(e) {
-    console.log("song changed");
-    this.setState({ author: e.target.value });
-    console.log(this.state);
+    this.setState({ song: e.target.files[0] });
+  }
+
+  onImgChange(e) {
+    this.setState({ img: e.target.files[0] });
   }
 
   onFormSubmit(e) {
-    // send post request to proxy
+    /* creates form from state and posts form to server */
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("title", this.state.title);
+    formData.append("artist", this.state.artist);
+    formData.append("img", this.state.img);
+    formData.append("song", this.state.song);
+
+    fetch("http://localhost:3001/api/song/insert", {
+      method: "POST",
+      body: formData
+    })
+      .then(res => res.json())
+      .then(res_json => {
+        console.log(res_json);
+        window.location.reload();
+      });
   }
 
   render() {
     return (
-      <Form
-        onSubmit={this.handleSubmit}
-        style={{ width: "50%", display: "inline-block", textAlign: "left" }}
-      >
+      <Form onSubmit={this.handleSubmit} style={{ margin: "1em" }}>
         <Form.Group controlId="title">
           <Form.Label>Title</Form.Label>
           <Form.Control
@@ -57,31 +71,36 @@ export default class UploadForm extends React.Component {
           />
         </Form.Group>
 
-        <Form.Group controlId="author">
-          <Form.Label>Author</Form.Label>
+        <Form.Group controlId="artist">
+          <Form.Label>Artist</Form.Label>
           <Form.Control
             type="text"
-            onChange={this.onAuthorChange}
+            onChange={this.onArtistChange}
             placeholder="beastie boys"
           />
         </Form.Group>
 
         <Form.Group controlId="song">
-          <Form.Label>Song File</Form.Label>
-          <Form.Control type="file" />
+          <Form.Label>Song File: .wav</Form.Label>
+          <Form.Control
+            type="file"
+            accept=".wav"
+            onChange={this.onSongChange}
+          />
         </Form.Group>
 
-        <ImageUploader
-          withIcon={true}
-          buttonText="Choose images"
-          onChange={this.onImgChange}
-          imgExtension={[".jpg", ".png"]}
-          maxFileSize={5242880}
-        />
+        <Form.Group controlId="img">
+          <Form.Label>Song Image: 64x64</Form.Label>
+          <Form.Control
+            type="file"
+            accept="image/*"
+            onChange={this.onImgChange}
+          />
+        </Form.Group>
 
-        <Button variant="primary" onClick={this.onFormSubmit}>
+        <button variant="dark" onClick={this.onFormSubmit}>
           Submit
-        </Button>
+        </button>
       </Form>
     );
   }

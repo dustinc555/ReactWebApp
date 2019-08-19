@@ -3,9 +3,12 @@
 services.json
 
 # dependencies
-/node_modules
+node_modules
 /.pnp
 .pnp.js
+
+# static stuff
+static
 
 # testing
 /coverage

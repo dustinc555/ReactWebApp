@@ -1,0 +1,18 @@
+.songListContainer {
+  background-color: #343a40;
+}
+
+.songlist {
+  overflow: scroll;
+  list-style-type: none;
+  padding-left: 0px;
+  max-height: 15%;
+  margin: 0;
+}
+
+.PlayBar {
+  margin: 0;
+  padding: 0;
+  color: white;
+  text-align: center;
+}
