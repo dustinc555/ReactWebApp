@@ -12,21 +12,21 @@ import { Col, Row } from "react-bootstrap";
 export default class RootComponent extends React.Component {
   render() {
     return (
-      <Router>
-        <div className="App">
-          <Nav />
-          <Row>
+      <div className="App">
+        <Nav />
+        <Row>
+          <Router>
             <Col sm={8}>
               <Route exact path="/" component={() => <Upload />} />
               <Route path="/Upload" component={() => <Upload />} />
               <Route path="/About" component={() => <About />} />
             </Col>
-            <Col sm={4}>
-              <SongList />
-            </Col>
-          </Row>
-        </div>
-      </Router>
+          </Router>
+          <Col sm={4}>
+            <SongList />
+          </Col>
+        </Row>
+      </div>
     );
   }
 }

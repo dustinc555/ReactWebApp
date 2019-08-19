@@ -7,8 +7,17 @@ export default class SongList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { songs: [], playing: false, currentSong: null };
-    this.songCardCallback = this.songCardCallback.bind(this);
     this.audioPlayer = new Audio();
+
+    this.songCardCallback = this.songCardCallback.bind(this);
+    this.nextButtonCallback = this.nextButtonCallback.bind(this);
+    this.previousButtonCallback = this.previousButtonCallback.bind(this);
+    this.playButtonCallback = this.playButtonCallback.bind(this);
+    this.onVolumneChange = this.onVolumneChange.bind(this);
+
+    this.audioPlayer.onended = () => {
+      this.nextButtonCallback();
+    };
   }
 
   componentDidMount() {
@@ -17,6 +26,11 @@ export default class SongList extends React.Component {
       .then(songs => this.setState({ songs }));
 
     console.log(this.state);
+  }
+
+  onVolumneChange(e) {
+    let volumePercent = e.target.value;
+    this.audioPlayer.volume = volumePercent;
   }
 
   songCardCallback(index) {
@@ -29,9 +43,30 @@ export default class SongList extends React.Component {
   nextButtonCallback() {
     // either next item or start from the beginning
     var nextIndex =
-      this.state.currentSong === this.state.songs.length
+      this.state.currentSong === this.state.songs.length - 1
         ? 0
         : this.state.currentSong + 1;
+    this.songCardCallback(nextIndex);
+  }
+
+  previousButtonCallback() {
+    // either previous item or start from the end
+    var previousIndex =
+      this.state.currentSong === 0
+        ? this.state.songs.length - 1
+        : this.state.currentSong - 1;
+    this.songCardCallback(previousIndex);
+  }
+
+  playButtonCallback() {
+    let isPlaying = !this.state.playing;
+    this.setState({ playing: isPlaying });
+
+    if (isPlaying) {
+      this.audioPlayer.play();
+    } else {
+      this.audioPlayer.pause();
+    }
   }
 
   render() {
@@ -68,9 +103,18 @@ export default class SongList extends React.Component {
           })}
         </ul>
         <div className="PlayBar">
-          <button>Prev</button>
-          <button>{text}</button>
-          <button>Next</button>
+          <Button onClick={this.previousButtonCallback}>Prev</Button>
+          <Button onClick={this.playButtonCallback}>{text}</Button>
+          <Button onClick={this.nextButtonCallback}>Next</Button>
+          <Form.Group controlId="volumne">
+            <Form.Control
+              type="range"
+              min={0}
+              max={1}
+              step={0.05}
+              onChange={this.onVolumneChange}
+            />
+          </Form.Group>
         </div>
       </div>
     );
