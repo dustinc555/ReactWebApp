@@ -1,6 +1,6 @@
 import React from "react";
-
 import { Media } from "react-bootstrap";
+import "./SongCard.css";
 
 export default class SongCard extends React.Component {
   constructor(props) {
@@ -15,26 +15,29 @@ export default class SongCard extends React.Component {
   render() {
     var backgroundColor = "white";
     if (this.props.selectedSong === this.props.index) {
-      backgroundColor = "teal";
+      backgroundColor = "#007bff";
     }
 
     return (
       <Media
+        className="songCard"
         as="li"
         style={{
           backgroundColor: backgroundColor,
           border: "solid thin black",
           borderRadius: ".3em",
           margin: ".3em",
-          height: 64
+          height: 64,
+          cursor: "pointer",
+          transition: "all .2s ease-in-out"
         }}
+        onClick={this.onCardClicked}
       >
         <img
           width={64}
           height={"100%"}
           className="mr-3"
           src={"images/" + this.props.idsong + ".jpg"}
-          onClick={this.onCardClicked}
           alt=""
         />
         <Media.Body>

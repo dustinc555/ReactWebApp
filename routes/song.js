@@ -32,13 +32,29 @@ router.get("/all", function(req, res, next) {
 router.delete("/delete/:songId", function(req, res, next) {
   var con = mysql.createConnection(mysql_config);
 
-  var sql = "DELETE FROM sys.song WHERE idsong = " + req.params.songId + ";";
+  // get item
+  con.query(
+    "DELETE FROM sys.song WHERE idsong = ?;",
+    [req.body.idsong],
+    (err, result) => {
+      if (err) throw err;
+      res.send("success");
+    }
+  );
+});
+
+router.post("/query", function(req, res, next) {
+  var con = mysql.createConnection(mysql_config);
 
   // get item
-  con.query(sql, (err, result) => {
-    if (err) throw err;
-    res.send("success");
-  });
+  con.query(
+    "SELECT * FROM sys.song WHERE title LIKE %?% AND artist LIKE %?%",
+    [req.body.title, req.body.artist],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
 });
 
 router.post("/insert", function(req, res, next) {
@@ -47,31 +63,35 @@ router.post("/insert", function(req, res, next) {
 
   var con = mysql.createConnection(mysql_config);
 
-  var sql =
-    'INSERT INTO sys.song (title, artist) VALUES ("' +
-    req.body.title +
-    '","' +
-    req.body.artist +
-    '")';
-
-  console.log("sql: " + sql);
-
   var idsong = -1;
 
   try {
-    // store item and get id
-    con.query(sql, (err, result) => {
-      if (err) throw err;
-      idsong = result.insertId;
-      console.log("pushed to db");
-      // save files
-      req.files.img.mv("./static/images/" + idsong + ".jpg");
-      console.log("image saved!");
+    // validate data
+    if (
+      req.files.img == null ||
+      req.files.song == null ||
+      req.body.title == null ||
+      req.body.artist == null
+    )
+      throw { name: "invalid data", message: "one or more null fields" };
 
-      req.files.song.mv("./static/songs/" + idsong + ".wav");
-      console.log("song saved!");
-    });
-  } catch {
+    // store item and get id
+    con.query(
+      "INSERT INTO * sys.song (title, artist) VALUES ('?', '?')",
+      [req.body.title, req.body.artist],
+      (err, result) => {
+        if (err) throw err;
+        idsong = result.insertId;
+        console.log("pushed to db");
+        // save files
+        req.files.img.mv("./static/images/" + idsong + ".jpg");
+        console.log("image saved!");
+
+        req.files.song.mv("./static/songs/" + idsong + ".wav");
+        console.log("song saved!");
+      }
+    );
+  } catch (err) {
     res.send({ result: "error", idsong: idsong });
   }
 

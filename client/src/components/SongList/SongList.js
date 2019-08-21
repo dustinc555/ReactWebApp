@@ -6,9 +6,13 @@ import { Navbar, Nav, Button, Form, FormControl } from "react-bootstrap";
 export default class SongList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { songs: [], playing: false, currentSong: null };
+    this.state = {
+      songs: [],
+      playing: false,
+      currentSong: null,
+      songQuery: ""
+    };
     this.audioPlayer = new Audio();
-
     this.songCardCallback = this.songCardCallback.bind(this);
     this.nextButtonCallback = this.nextButtonCallback.bind(this);
     this.previousButtonCallback = this.previousButtonCallback.bind(this);
@@ -26,6 +30,16 @@ export default class SongList extends React.Component {
       .then(songs => this.setState({ songs }));
 
     console.log(this.state);
+  }
+
+  onSongSearchSubmit() {
+    fetch("/api/song/all")
+      .then(res => res.json())
+      .then(songs => this.setState({ songs }));
+  }
+
+  onQueryChange(e) {
+    this.setState({ songQuery: e.target.value });
   }
 
   onVolumneChange(e) {
@@ -78,12 +92,7 @@ export default class SongList extends React.Component {
     return (
       <div className="songListContainer">
         <Form inline>
-          <FormControl
-            type="text"
-            placeholder="Search"
-            className="mr-sm-2"
-            style={{ width: "65%" }}
-          />
+          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
           <Button variant="outline-info" style={{ width: "25%" }}>
             Search
           </Button>
@@ -104,17 +113,19 @@ export default class SongList extends React.Component {
         </ul>
         <div className="PlayBar">
           <Button onClick={this.previousButtonCallback}>Prev</Button>
-          <Button onClick={this.playButtonCallback}>{text}</Button>
+          <Button style={{ width: "35%" }} onClick={this.playButtonCallback}>
+            {text}
+          </Button>
           <Button onClick={this.nextButtonCallback}>Next</Button>
-          <Form.Group controlId="volumne">
-            <Form.Control
-              type="range"
-              min={0}
-              max={1}
-              step={0.05}
-              onChange={this.onVolumneChange}
-            />
-          </Form.Group>
+          <Form.Control
+            type="range"
+            min={0}
+            max={1}
+            step={0.01}
+            defaultValue={this.audioPlayer.volume}
+            onChange={this.onVolumneChange}
+            style={{ width: "50%", margin: "0 auto" }}
+          />
         </div>
       </div>
     );

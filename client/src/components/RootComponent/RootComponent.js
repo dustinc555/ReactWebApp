@@ -14,18 +14,11 @@ export default class RootComponent extends React.Component {
     return (
       <div className="App">
         <Nav />
-        <Row>
-          <Router>
-            <Col sm={8}>
-              <Route exact path="/" component={() => <Upload />} />
-              <Route path="/Upload" component={() => <Upload />} />
-              <Route path="/About" component={() => <About />} />
-            </Col>
-          </Router>
-          <Col sm={4}>
-            <SongList />
-          </Col>
-        </Row>
+        <Router>
+          <Route exact path="/" component={() => <About />} />
+          <Route path="/Play" component={() => <SongList />} />
+          <Route path="/Upload" component={() => <Upload />} />
+        </Router>
       </div>
     );
   }
