@@ -10,36 +10,37 @@ export default class SongList extends React.Component {
       songs: [],
       playing: false,
       currentSong: null,
-      songQuery: ""
+      queryText: ""
     };
+
     this.audioPlayer = new Audio();
     this.songCardCallback = this.songCardCallback.bind(this);
     this.nextButtonCallback = this.nextButtonCallback.bind(this);
     this.previousButtonCallback = this.previousButtonCallback.bind(this);
     this.playButtonCallback = this.playButtonCallback.bind(this);
     this.onVolumneChange = this.onVolumneChange.bind(this);
+    this.onQueryChange = this.onQueryChange.bind(this);
+    this.querySongs = this.querySongs.bind(this);
 
     this.audioPlayer.onended = () => {
       this.nextButtonCallback();
     };
-  }
-
-  componentDidMount() {
     fetch("/api/song/all")
       .then(res => res.json())
       .then(songs => this.setState({ songs }));
-
-    console.log(this.state);
   }
 
-  onSongSearchSubmit() {
-    fetch("/api/song/all")
+  querySongs() {
+    fetch("/api/song/query", {
+      method: "POST",
+      body: JSON.stringify({ text: this.state.queryText })
+    })
       .then(res => res.json())
       .then(songs => this.setState({ songs }));
   }
 
   onQueryChange(e) {
-    this.setState({ songQuery: e.target.value });
+    this.setState({ queryText: e.target.value });
   }
 
   onVolumneChange(e) {
@@ -92,12 +93,21 @@ export default class SongList extends React.Component {
     return (
       <div className="songListContainer">
         <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-info" style={{ width: "25%" }}>
+          <FormControl
+            type="text"
+            onChange={this.onQueryChange}
+            placeholder="Artist or title"
+            className="mr-sm-2"
+          />
+          <Button
+            onClick={this.querySongs}
+            variant="outline-info"
+            style={{ width: "25%" }}
+          >
             Search
           </Button>
         </Form>
-        <ul className="songlist">
+        <ul className="songlist" style={{ maxHeight: "50vh" }}>
           {this.state.songs.map((song, index) => {
             return (
               <SongCard
@@ -124,7 +134,10 @@ export default class SongList extends React.Component {
             step={0.01}
             defaultValue={this.audioPlayer.volume}
             onChange={this.onVolumneChange}
-            style={{ width: "50%", margin: "0 auto" }}
+            style={{
+              width: "50%",
+              margin: "0 auto"
+            }}
           />
         </div>
       </div>

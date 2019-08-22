@@ -48,7 +48,7 @@ export default class UploadForm extends React.Component {
     formData.append("img", this.state.img);
     formData.append("song", this.state.song);
 
-    fetch("http://localhost:3001/api/song/insert", {
+    fetch("/api/song/insert", {
       method: "POST",
       body: formData
     })

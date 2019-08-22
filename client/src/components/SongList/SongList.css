@@ -1,6 +1,7 @@
 .songListContainer {
   background-color: #343a40;
   max-width: 40em;
+  min-width: 50%;
   padding: 1em;
 }
 
@@ -8,6 +9,10 @@
   list-style-type: none;
   padding-left: 0px;
   margin: 0;
+  overflow-y: auto;
+  overflow-x: none;
+  flex: 2;
+  max-height: 10%;
 }
 
 .PlayBar {

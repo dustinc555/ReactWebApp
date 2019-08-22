@@ -26,7 +26,7 @@ app.use(logger("dev"));
 // this tells express to parse text/plain requests as JSON
 app.use(
   express.json({
-    type: ["application/json"]
+    type: ["application/json", "text/plain"]
   })
 );
 

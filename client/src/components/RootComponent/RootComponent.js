@@ -1,5 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import "./RootComponent.css";
 
 import Nav from "../Nav/Nav";
 import Upload from "../Upload/Upload";
@@ -14,11 +15,13 @@ export default class RootComponent extends React.Component {
     return (
       <div className="App">
         <Nav />
-        <Router>
-          <Route exact path="/" component={() => <About />} />
-          <Route path="/Play" component={() => <SongList />} />
-          <Route path="/Upload" component={() => <Upload />} />
-        </Router>
+        <div className="content">
+          <Router>
+            <Route exact path="/" component={() => <About />} />
+            <Route path="/Play" component={() => <SongList />} />
+            <Route path="/Upload" component={() => <Upload />} />
+          </Router>
+        </div>
       </div>
     );
   }
