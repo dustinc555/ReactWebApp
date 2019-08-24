@@ -2,6 +2,7 @@ import React from "react";
 import SongCard from "../SongCard/SongCard";
 import "./SongList.css";
 import { Navbar, Nav, Button, Form, FormControl } from "react-bootstrap";
+import { Col, Row, Container } from "react-bootstrap";
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -91,7 +92,7 @@ export default class SongList extends React.Component {
     }
 
     return (
-      <div className="songListContainer">
+      <Container className="songListContainer">
         <Form inline>
           <FormControl
             type="text"
@@ -99,34 +100,18 @@ export default class SongList extends React.Component {
             placeholder="Artist or title"
             className="mr-sm-2"
           />
-          <Button
-            onClick={this.querySongs}
-            variant="outline-info"
-            style={{ width: "25%" }}
-          >
+          <Button onClick={this.querySongs} variant="outline-info">
             Search
           </Button>
         </Form>
-        <ul className="songlist" style={{ maxHeight: "50vh" }}>
-          {this.state.songs.map((song, index) => {
-            return (
-              <SongCard
-                index={index}
-                idsong={song.idsong}
-                title={song.title}
-                artist={song.artist}
-                selectedSong={this.state.currentSong}
-                callback={this.songCardCallback}
-              />
-            );
-          })}
-        </ul>
-        <div className="PlayBar">
-          <Button onClick={this.previousButtonCallback}>Prev</Button>
-          <Button style={{ width: "35%" }} onClick={this.playButtonCallback}>
-            {text}
-          </Button>
-          <Button onClick={this.nextButtonCallback}>Next</Button>
+        <Row className="PlayBar">
+          <Col>
+            <Button onClick={this.previousButtonCallback}>Prev</Button>
+            <Button onClick={this.playButtonCallback}>{text}</Button>
+            <Button onClick={this.nextButtonCallback}>Next</Button>
+          </Col>
+        </Row>
+        <Row className="volumeBar">
           <Form.Control
             type="range"
             min={0}
@@ -134,13 +119,25 @@ export default class SongList extends React.Component {
             step={0.01}
             defaultValue={this.audioPlayer.volume}
             onChange={this.onVolumneChange}
-            style={{
-              width: "50%",
-              margin: "0 auto"
-            }}
           />
-        </div>
-      </div>
+        </Row>
+        <Row>
+          <ul className="songlist" style={{ maxHeight: "50vh" }}>
+            {this.state.songs.map((song, index) => {
+              return (
+                <SongCard
+                  index={index}
+                  idsong={song.idsong}
+                  title={song.title}
+                  artist={song.artist}
+                  selectedSong={this.state.currentSong}
+                  callback={this.songCardCallback}
+                />
+              );
+            })}
+          </ul>
+        </Row>
+      </Container>
     );
   }
 }

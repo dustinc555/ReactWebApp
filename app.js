@@ -4,7 +4,6 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-var indexRouter = require("./routes/index");
 var songRouter = require("./routes/song");
 
 var cors = require("cors");
@@ -22,7 +21,6 @@ app.set("view engine", "jade");
 
 app.use(logger("dev"));
 
-// Will need a better solution for CORS in the future
 // this tells express to parse text/plain requests as JSON
 app.use(
   express.json({
