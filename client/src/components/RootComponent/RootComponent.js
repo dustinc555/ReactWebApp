@@ -1,6 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./RootComponent.css";
+import { Col, Row, Container } from "react-bootstrap";
 
 import Nav from "../Nav/Nav";
 import Upload from "../Upload/Upload";
@@ -8,7 +9,6 @@ import SongList from "../SongList/SongList";
 import About from "../About/About";
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Col, Row } from "react-bootstrap";
 
 export default class RootComponent extends React.Component {
   render() {

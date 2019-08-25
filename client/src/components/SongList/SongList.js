@@ -1,7 +1,10 @@
 import React from "react";
 import SongCard from "../SongCard/SongCard";
+import MusicProgress from "../MusicProgress/MusicProgress";
+
 import "./SongList.css";
-import { Navbar, Nav, Button, Form, FormControl } from "react-bootstrap";
+
+import { Button, Form, FormControl } from "react-bootstrap";
 import { Col, Row, Container } from "react-bootstrap";
 
 export default class SongList extends React.Component {
@@ -11,10 +14,13 @@ export default class SongList extends React.Component {
       songs: [],
       playing: false,
       currentSong: null,
-      queryText: ""
+      queryText: "",
+      volume: 0.75,
+      currentTime: 0
     };
 
     this.audioPlayer = new Audio();
+    this.audioPlayer.volume = 0.75;
     this.songCardCallback = this.songCardCallback.bind(this);
     this.nextButtonCallback = this.nextButtonCallback.bind(this);
     this.previousButtonCallback = this.previousButtonCallback.bind(this);
@@ -26,6 +32,11 @@ export default class SongList extends React.Component {
     this.audioPlayer.onended = () => {
       this.nextButtonCallback();
     };
+
+    this.audioPlayer.ontimeupdate = () => {
+      this.forceUpdate();
+    };
+
     fetch("/api/song/all")
       .then(res => res.json())
       .then(songs => this.setState({ songs }));
@@ -91,6 +102,9 @@ export default class SongList extends React.Component {
       text = "Pause";
     }
 
+    var currentTime = this.audioPlayer.currentTime / this.audioPlayer.duration;
+    //currentTime = (currentTime * 100).toFixed(2);
+
     return (
       <Container className="songListContainer">
         <Form inline>
@@ -112,7 +126,7 @@ export default class SongList extends React.Component {
           </Col>
         </Row>
         <Row className="volumeBar">
-          <Form.Control
+          <FormControl
             type="range"
             min={0}
             max={1}
@@ -136,6 +150,9 @@ export default class SongList extends React.Component {
               );
             })}
           </ul>
+        </Row>
+        <Row>
+          <MusicProgress value={currentTime} />
         </Row>
       </Container>
     );

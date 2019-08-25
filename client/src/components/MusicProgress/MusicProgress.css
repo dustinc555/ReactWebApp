@@ -1,0 +1,33 @@
+.musicPlayerContainer {
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1em;
+  text-align: center;
+}
+
+.musicPlayerInner {
+  overflow: hidden;
+  height: 10px;
+}
+
+.musicPlayerLeft {
+  background-color: green;
+  float: left;
+  border-radius: 3em;
+  height: 10px;
+}
+
+.musicPlayerRight {
+  background-color: gray;
+  float: left;
+  border-radius: 3em;
+  height: 10px;
+}
+
+.musicPlayerCenter {
+  background-color: blue;
+  float: left;
+  border-radius: 3em;
+  height: 10px;
+}

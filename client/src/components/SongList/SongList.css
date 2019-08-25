@@ -7,7 +7,6 @@
 .songlist {
   list-style-type: none;
   padding: 5px;
-  margin: 0;
   overflow-y: auto;
   overflow-x: hidden;
   flex: 2;
@@ -15,11 +14,20 @@
 }
 
 .volumeBar {
-  flex: 2;
-  margin: 0;
+  margin: 0 auto;
+  width: 30%;
+  flex: 25;
+  text-align: center;
 }
 
 .PlayBar {
   text-align: center;
   margin: 1em;
+}
+
+.songProgressBar {
+  flex: 5;
+  text-align: center;
+  margin: 1em;
+  text-align: center;
 }
