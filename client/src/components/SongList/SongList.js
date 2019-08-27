@@ -20,7 +20,7 @@ export default class SongList extends React.Component {
     };
 
     this.audioPlayer = new Audio();
-    this.audioPlayer.volume = 0.75;
+    this.audioPlayer.volume = this.state.volume;
     this.songCardCallback = this.songCardCallback.bind(this);
     this.nextButtonCallback = this.nextButtonCallback.bind(this);
     this.previousButtonCallback = this.previousButtonCallback.bind(this);
@@ -120,9 +120,9 @@ export default class SongList extends React.Component {
         </Form>
         <Row className="PlayBar">
           <Col>
-            <Button onClick={this.previousButtonCallback}>Prev</Button>
+            <Button onClick={this.previousButtonCallback}>&#60;</Button>
             <Button onClick={this.playButtonCallback}>{text}</Button>
-            <Button onClick={this.nextButtonCallback}>Next</Button>
+            <Button onClick={this.nextButtonCallback}>&#62;</Button>
           </Col>
         </Row>
         <Row className="volumeBar">
