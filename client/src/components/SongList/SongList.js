@@ -18,6 +18,7 @@ export default class SongList extends React.Component {
       volume: 0.75,
       currentTime: 0,
       waiting: false
+
     };
 
     this.audioPlayer = new Audio();
@@ -60,6 +61,7 @@ export default class SongList extends React.Component {
   onQueryChange(e) {
     this.setState({ queryText: e.target.value });
   }
+<<<<<<< HEAD
 
   onVolumneChange(e) {
     let volumePercent = e.target.value;
@@ -91,6 +93,39 @@ export default class SongList extends React.Component {
     this.songCardCallback(previousIndex);
   }
 
+=======
+
+  onVolumneChange(e) {
+    let volumePercent = e.target.value;
+    this.audioPlayer.volume = volumePercent;
+  }
+
+  songCardCallback(index) {
+    this.setState({ playing: true, currentSong: index });
+    this.audioPlayer.src = "songs/" + this.state.songs[index].idsong + ".wav";
+    this.audioPlayer.load();
+    this.audioPlayer.play();
+  }
+
+  nextButtonCallback() {
+    // either next item or start from the beginning
+    var nextIndex =
+      this.state.currentSong === this.state.songs.length - 1
+        ? 0
+        : this.state.currentSong + 1;
+    this.songCardCallback(nextIndex);
+  }
+
+  previousButtonCallback() {
+    // either previous item or start from the end
+    var previousIndex =
+      this.state.currentSong === 0
+        ? this.state.songs.length - 1
+        : this.state.currentSong - 1;
+    this.songCardCallback(previousIndex);
+  }
+
+>>>>>>> 86ece2303392b53d370fe88e973fb89e4eda2d02
   playButtonCallback() {
     let isPlaying = !this.state.playing;
     this.setState({ playing: isPlaying });
@@ -109,6 +144,10 @@ export default class SongList extends React.Component {
     }
 
     var currentTime = this.audioPlayer.currentTime / this.audioPlayer.duration;
+<<<<<<< HEAD
+=======
+    //currentTime = (currentTime * 100).toFixed(2);
+>>>>>>> 86ece2303392b53d370fe88e973fb89e4eda2d02
 
     return (
       <Container className="songListContainer">
