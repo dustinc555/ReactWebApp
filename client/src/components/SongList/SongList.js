@@ -16,7 +16,8 @@ export default class SongList extends React.Component {
       currentSong: null,
       queryText: "",
       volume: 0.75,
-      currentTime: 0
+      currentTime: 0,
+      waiting: false
     };
 
     this.audioPlayer = new Audio();
@@ -29,12 +30,17 @@ export default class SongList extends React.Component {
     this.onQueryChange = this.onQueryChange.bind(this);
     this.querySongs = this.querySongs.bind(this);
 
+    // Bind audio player events
     this.audioPlayer.onended = () => {
       this.nextButtonCallback();
     };
 
     this.audioPlayer.ontimeupdate = () => {
       this.forceUpdate();
+    };
+
+    this.audioPlayer.waiting = () => {
+      this.setState({ waiting: true, playing: false });
     };
 
     fetch("/api/song/all")
@@ -103,7 +109,6 @@ export default class SongList extends React.Component {
     }
 
     var currentTime = this.audioPlayer.currentTime / this.audioPlayer.duration;
-    //currentTime = (currentTime * 100).toFixed(2);
 
     return (
       <Container className="songListContainer">
