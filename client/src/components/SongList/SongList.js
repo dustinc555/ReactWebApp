@@ -18,7 +18,6 @@ export default class SongList extends React.Component {
       volume: 0.75,
       currentTime: 0,
       waiting: false
-
     };
 
     this.audioPlayer = new Audio();
@@ -94,7 +93,6 @@ export default class SongList extends React.Component {
     this.songCardCallback(previousIndex);
   }
 
-
   playButtonCallback() {
     let isPlaying = !this.state.playing;
     this.setState({ playing: isPlaying });
@@ -113,10 +111,6 @@ export default class SongList extends React.Component {
     }
 
     var currentTime = this.audioPlayer.currentTime / this.audioPlayer.duration;
-<<<<<<< HEAD
-=======
-    //currentTime = (currentTime * 100).toFixed(2);
->>>>>>> 86ece2303392b53d370fe88e973fb89e4eda2d02
 
     return (
       <Container className="songListContainer">
