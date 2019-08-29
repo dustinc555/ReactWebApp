@@ -64,8 +64,36 @@ The server by default runs on port `3001` but it may be changed by giving it a p
 
   <b>Expects</b> A post request with the fields: req.files.img (an image file), req.files.song (a wav file), req.body.title ( string), req.body.artist (string)
 
+  <b>Returns</b> If successful, returns the id of the newly inserted song, otherwise and error message.
+
 - `/api/query`
 
   Takes a post string and returns a filtered list of JSON songs based on the string.
 
-  Ex: Given the query string "A Day in the life" it may return JSON for the song A Day in the life:
+  Ex: Given the query string "A day in the it may return JSON for the song A Day in the life.
+
+```js
+fetch("/api/song/query", {
+  method: "POST",
+  body: JSON.stringify({ text: "A day in the" })
+})
+  .then(res => res.json())
+  .then(songs => console.log(songs));
+```
+
+this would return the following JSON
+
+```js
+[
+  {
+    idsong: 91,
+    title: "A Day In The Life",
+    artist: "The Beatles",
+    tr: 2.181887149810791,
+    ar: 0
+  }
+];
+```
+
+tr - title relevance,
+ar - artist relevance
