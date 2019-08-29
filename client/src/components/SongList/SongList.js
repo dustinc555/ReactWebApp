@@ -45,10 +45,22 @@ export default class SongList extends React.Component {
       this.setState({ waiting: true, playing: false });
     };
 
+    this.audioPlayer.stalled = () => {
+      console.log("i am stalled");
+      this.setState({ waiting: true, playing: false });
+    };
+
+    this.audioPlayer.suspend = () => {
+      console.log("i am suspended");
+      this.setState({ waiting: true, playing: false });
+    };
+
     fetch("/api/song/all")
       .then(res => res.json())
       .then(songs => this.setState({ songs }));
   }
+
+  onSeek(value) {}
 
   querySongs() {
     fetch("/api/song/query", {
@@ -114,33 +126,35 @@ export default class SongList extends React.Component {
 
     return (
       <Container className="songListContainer">
-        <Form inline>
-          <FormControl
-            type="text"
-            onChange={this.onQueryChange}
-            placeholder="Artist or title"
-            className="mr-sm-2"
-          />
-          <Button onClick={this.querySongs} variant="outline-info">
-            Search
-          </Button>
-        </Form>
-        <Row className="PlayBar">
-          <Col>
-            <Button onClick={this.previousButtonCallback}>&#60;</Button>
-            <Button onClick={this.playButtonCallback}>{text}</Button>
-            <Button onClick={this.nextButtonCallback}>&#62;</Button>
-          </Col>
+        <Row style={{ padding: "1em" }}>
+          <Form inline>
+            <FormControl
+              type="text"
+              onChange={this.onQueryChange}
+              placeholder="Artist or title"
+              className="mr-sm-2"
+            />
+            <Button onClick={this.querySongs} variant="outline-info">
+              Search
+            </Button>
+          </Form>
         </Row>
-        <Row className="volumeBar">
-          <FormControl
-            type="range"
-            min={0}
-            max={1}
-            step={0.01}
-            defaultValue={this.audioPlayer.volume}
-            onChange={this.onVolumneChange}
-          />
+        <Row>
+          <Form inline>
+            <div className="flexChild">
+              <Button onClick={this.previousButtonCallback}>&#60;</Button>
+              <Button onClick={this.playButtonCallback}>{text}</Button>
+              <Button onClick={this.nextButtonCallback}>&#62;</Button>
+            </div>
+            <FormControl
+              type="range"
+              min={0}
+              max={1}
+              step={0.01}
+              defaultValue={this.audioPlayer.volume}
+              onChange={this.onVolumneChange}
+            />
+          </Form>
         </Row>
         <Row>
           <ul className="songlist" style={{ maxHeight: "50vh" }}>
