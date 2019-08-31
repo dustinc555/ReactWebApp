@@ -29,7 +29,9 @@ export default class SongList extends React.Component {
     this.onVolumneChange = this.onVolumneChange.bind(this);
     this.onQueryChange = this.onQueryChange.bind(this);
     this.querySongs = this.querySongs.bind(this);
+    this.onSeek = this.onSeek.bind(this);
 
+    /** Audio Player Events */
     // Bind audio player events
     this.audioPlayer.onended = () => {
       this.nextButtonCallback();
@@ -55,12 +57,23 @@ export default class SongList extends React.Component {
       this.setState({ waiting: true, playing: false });
     };
 
+    /** Initialize data */
     fetch("/api/song/all")
       .then(res => res.json())
       .then(songs => this.setState({ songs }));
   }
 
-  onSeek(value) {}
+  /**
+   * Sets the current song time from percent value
+   * @param {float between 0 and 1} value
+   */
+  onSeek(value) {
+    console.log("seeking: " + Math.floor(value * this.audioPlayer.duration));
+
+    this.audioPlayer.currentTime = Math.floor(
+      value * this.audioPlayer.duration
+    );
+  }
 
   querySongs() {
     fetch("/api/song/query", {
@@ -122,6 +135,8 @@ export default class SongList extends React.Component {
       text = "Pause";
     }
 
+    /* todo: figure out why the songlist's max height 
+    must be declared within the render to display properly */
     var currentTime = this.audioPlayer.currentTime / this.audioPlayer.duration;
 
     return (
@@ -173,7 +188,7 @@ export default class SongList extends React.Component {
           </ul>
         </Row>
         <Row>
-          <MusicProgress value={currentTime} />
+          <MusicProgress clickCallback={this.onSeek} value={currentTime} />
         </Row>
       </Container>
     );

@@ -29,7 +29,8 @@ export default class SongCard extends React.Component {
           margin: ".3em",
           height: 64,
           cursor: "pointer",
-          transition: "all .2s ease-in-out"
+          transition: "all .2s ease-in-out",
+          zIndex: "auto"
         }}
         onClick={this.onCardClicked}
       >

@@ -1,9 +1,38 @@
 import React from "react";
+import ReactDOM from "react-dom";
+
 import "./MusicProgress.css";
 
 import "bootstrap/dist/css/bootstrap.css";
 
 export default class MusicProgress extends React.Component {
+  constructor(props) {
+    super(props);
+    this.clickCallback = this.clickCallback.bind(this);
+    this.state = { rect: null };
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.resize.bind(this));
+    this.resize();
+  }
+
+  resize() {
+    var rect = ReactDOM.findDOMNode(this).getBoundingClientRect();
+    this.setState({ rect: rect });
+  }
+
+  clickCallback(e) {
+    // get rough percentage through song
+
+    var x = e.pageX - this.state.rect.left;
+    console.log("x: " + x);
+    this.props.clickCallback(
+      (e.pageX - this.state.rect.left) /
+        (this.state.rect.right - this.state.rect.left)
+    );
+  }
+
   render() {
     var mid = "0%";
     var leftWidth = "0%";
@@ -17,7 +46,7 @@ export default class MusicProgress extends React.Component {
     }
 
     return (
-      <div className="musicPlayerContainer">
+      <div className="musicPlayerContainer" onClick={this.clickCallback}>
         <div className="musicPlayerInner">
           <div className="musicPlayerLeft" style={{ width: leftWidth }} />
           <div className="musicPlayerCenter" style={{ width: mid }} />

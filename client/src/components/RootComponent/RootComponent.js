@@ -1,7 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./RootComponent.css";
-import { Col, Row, Container } from "react-bootstrap";
 
 import Nav from "../Nav/Nav";
 import Upload from "../Upload/Upload";
