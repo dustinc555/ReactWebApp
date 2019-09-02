@@ -14,6 +14,7 @@ function isAcceptedImage(filename) {
   var ext = getExtension(filename);
   switch (ext.toLowerCase()) {
     case "jpg":
+    case "png":
       // TODO: accept more image types
       return true;
   }
@@ -127,8 +128,11 @@ router.post("/insert", function(req, res, next) {
         if (err) throw err;
         idsong = result.insertId;
         console.log("pushed to db");
+
         // save files
-        req.files.img.mv("./static/images/" + idsong + ".jpg");
+        req.files.img.mv(
+          "./static/images/" + idsong + "." + getExtension(req.files.img.name)
+        );
         console.log("image saved!");
 
         req.files.song.mv("./static/songs/" + idsong + ".wav");

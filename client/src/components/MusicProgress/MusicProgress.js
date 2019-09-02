@@ -26,7 +26,11 @@ export default class MusicProgress extends React.Component {
     // get rough percentage through song
 
     var x = e.pageX - this.state.rect.left;
-    console.log("x: " + x);
+    console.log(
+      "%: " +
+        (e.pageX - this.state.rect.left) /
+          (this.state.rect.right - this.state.rect.left)
+    );
     this.props.clickCallback(
       (e.pageX - this.state.rect.left) /
         (this.state.rect.right - this.state.rect.left)
@@ -39,7 +43,7 @@ export default class MusicProgress extends React.Component {
     var rightWidth = "0%";
 
     if (this.props.value) {
-      mid = 0.01;
+      mid = 0.005;
       leftWidth = ((this.props.value - mid) * 100).toString() + "%";
       rightWidth = ((1.0 - mid - this.props.value) * 100).toString() + "%";
       mid = mid.toString() * 100 + "%";

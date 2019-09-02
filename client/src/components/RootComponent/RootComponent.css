@@ -1,5 +1,7 @@
 .content {
   flex: 6;
+  margin: 0 auto;
+  width: 90%;
 }
 
 /* width */

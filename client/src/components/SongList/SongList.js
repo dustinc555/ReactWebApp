@@ -155,23 +155,6 @@ export default class SongList extends React.Component {
           </Form>
         </Row>
         <Row>
-          <Form inline>
-            <div className="flexChild">
-              <Button onClick={this.previousButtonCallback}>&#60;</Button>
-              <Button onClick={this.playButtonCallback}>{text}</Button>
-              <Button onClick={this.nextButtonCallback}>&#62;</Button>
-            </div>
-            <FormControl
-              type="range"
-              min={0}
-              max={1}
-              step={0.01}
-              defaultValue={this.audioPlayer.volume}
-              onChange={this.onVolumneChange}
-            />
-          </Form>
-        </Row>
-        <Row>
           <ul className="songlist" style={{ maxHeight: "50vh" }}>
             {this.state.songs.map((song, index) => {
               return (
@@ -187,8 +170,25 @@ export default class SongList extends React.Component {
             })}
           </ul>
         </Row>
+
+        <MusicProgress clickCallback={this.onSeek} value={currentTime} />
+
         <Row>
-          <MusicProgress clickCallback={this.onSeek} value={currentTime} />
+          <Form inline>
+            <div className="flexChild">
+              <Button onClick={this.previousButtonCallback}>&#60;</Button>
+              <Button onClick={this.playButtonCallback}>{text}</Button>
+              <Button onClick={this.nextButtonCallback}>&#62;</Button>
+            </div>
+            <FormControl
+              type="range"
+              min={0}
+              max={1}
+              step={0.01}
+              defaultValue={this.audioPlayer.volume}
+              onChange={this.onVolumneChange}
+            />
+          </Form>
         </Row>
       </Container>
     );

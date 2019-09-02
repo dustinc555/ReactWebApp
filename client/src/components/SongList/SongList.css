@@ -24,13 +24,6 @@
   margin: 1em;
 }
 
-.songProgressBar {
-  flex: 5;
-  text-align: center;
-  margin: 1em;
-  text-align: center;
-}
-
 .listControls {
   margin: 0 auto;
   padding: 1em;

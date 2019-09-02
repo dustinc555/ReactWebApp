@@ -22,13 +22,14 @@ export default class About extends React.Component {
         </p>
         <hr />
         <h4>Upload</h4>
-        <p>I would love to see what songs you upload!</p>
-        <p>I do check what you are attempting to upload before hand tho.</p>
         <p>
+          I would love to see what songs you upload!
+          <br />
           The image should be around 64 x 64 to be displayed well, the size
           limit is 50kb.
+          <br />
+          The song has to be a wav file.
         </p>
-        <p>The song has to be a wav file.</p>
       </div>
     );
   }
