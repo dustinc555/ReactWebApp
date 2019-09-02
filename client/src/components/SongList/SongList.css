@@ -1,34 +1,28 @@
 .songListContainer {
   background-color: #343a40;
-  min-width: 50%;
   padding: 0.5em;
 }
 
 .songlist {
   list-style-type: none;
-  padding: 5px;
+  padding: 0;
+  margin: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  flex: 2;
 }
 
 .volumeBar {
-  margin: 0 auto;
+  margin: 1em;
   width: 30%;
   flex: 25;
   text-align: center;
 }
 
-.PlayBar {
+.playBar {
   text-align: center;
-  margin: 1em;
+  padding: 0.5em;
 }
 
 .listControls {
-  margin: 0 auto;
-  padding: 1em;
-}
-
-.flexChild {
-  padding: 1em;
+  padding: 0.5em;
 }

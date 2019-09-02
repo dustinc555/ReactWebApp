@@ -5,7 +5,7 @@ import MusicProgress from "../MusicProgress/MusicProgress";
 import "./SongList.css";
 
 import { Button, Form, FormControl } from "react-bootstrap";
-import { Col, Row, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -140,57 +140,57 @@ export default class SongList extends React.Component {
     var currentTime = this.audioPlayer.currentTime / this.audioPlayer.duration;
 
     return (
-      <Container className="songListContainer">
-        <Row style={{ padding: "1em" }}>
-          <Form inline>
-            <FormControl
-              type="text"
-              onChange={this.onQueryChange}
-              placeholder="Artist or title"
-              className="mr-sm-2"
-            />
-            <Button onClick={this.querySongs} variant="outline-info">
-              Search
-            </Button>
-          </Form>
-        </Row>
-        <Row>
-          <ul className="songlist" style={{ maxHeight: "50vh" }}>
-            {this.state.songs.map((song, index) => {
-              return (
-                <SongCard
-                  index={index}
-                  idsong={song.idsong}
-                  title={song.title}
-                  artist={song.artist}
-                  selectedSong={this.state.currentSong}
-                  callback={this.songCardCallback}
-                />
-              );
-            })}
-          </ul>
-        </Row>
+      <div className="songListContainer">
+        <Form inline className="listControls">
+          <FormControl
+            type="text"
+            onChange={this.onQueryChange}
+            placeholder="Artist or title"
+            className="mr-sm-2"
+          />
+          <Button onClick={this.querySongs} variant="outline-info">
+            Search
+          </Button>
+        </Form>
 
-        <MusicProgress clickCallback={this.onSeek} value={currentTime} />
+        <ul className="songlist" style={{ maxHeight: "50vh" }}>
+          {this.state.songs.map((song, index) => {
+            return (
+              <SongCard
+                index={index}
+                idsong={song.idsong}
+                title={song.title}
+                artist={song.artist}
+                selectedSong={this.state.currentSong}
+                callback={this.songCardCallback}
+              />
+            );
+          })}
+        </ul>
 
-        <Row>
-          <Form inline>
-            <div className="flexChild">
-              <Button onClick={this.previousButtonCallback}>&#60;</Button>
-              <Button onClick={this.playButtonCallback}>{text}</Button>
-              <Button onClick={this.nextButtonCallback}>&#62;</Button>
-            </div>
-            <FormControl
-              type="range"
-              min={0}
-              max={1}
-              step={0.01}
-              defaultValue={this.audioPlayer.volume}
-              onChange={this.onVolumneChange}
-            />
-          </Form>
-        </Row>
-      </Container>
+        <MusicProgress
+          clickCallback={this.onSeek}
+          value={currentTime}
+          className="playBar"
+        />
+
+        <Form inline>
+          <div>
+            <Button onClick={this.previousButtonCallback}>&#60;</Button>
+            <Button onClick={this.playButtonCallback}>{text}</Button>
+            <Button onClick={this.nextButtonCallback}>&#62;</Button>
+          </div>
+          <FormControl
+            type="range"
+            min={0}
+            max={1}
+            step={0.01}
+            defaultValue={this.audioPlayer.volume}
+            onChange={this.onVolumneChange}
+            style={{ margin: "1em" }}
+          />
+        </Form>
+      </div>
     );
   }
 }

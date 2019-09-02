@@ -50,7 +50,7 @@ export default class MusicProgress extends React.Component {
     }
 
     return (
-      <div className="musicPlayerContainer" onClick={this.clickCallback}>
+      <div onClick={this.clickCallback} className="playBar">
         <div className="musicPlayerInner">
           <div className="musicPlayerLeft" style={{ width: leftWidth }} />
           <div className="musicPlayerCenter" style={{ width: mid }} />

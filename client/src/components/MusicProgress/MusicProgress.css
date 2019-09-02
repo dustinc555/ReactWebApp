@@ -1,9 +1,3 @@
-.musicPlayerContainer {
-  overflow: hidden;
-  width: 100%;
-  text-align: center;
-}
-
 .musicPlayerInner {
   overflow: hidden;
   height: 20px;
