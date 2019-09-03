@@ -40,7 +40,7 @@ export default class MusicProgress extends React.Component {
   render() {
     var mid = "0%";
     var leftWidth = "0%";
-    var rightWidth = "0%";
+    var rightWidth = "100%";
 
     if (this.props.value) {
       mid = 0.005;

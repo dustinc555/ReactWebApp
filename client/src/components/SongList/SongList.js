@@ -187,7 +187,7 @@ export default class SongList extends React.Component {
             step={0.01}
             defaultValue={this.audioPlayer.volume}
             onChange={this.onVolumneChange}
-            style={{ margin: "1em" }}
+            style={{ margin: ".5em" }}
           />
         </Form>
       </div>
