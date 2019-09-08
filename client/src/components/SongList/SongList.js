@@ -15,13 +15,13 @@ export default class SongList extends React.Component {
       playing: false,
       currentSong: null,
       queryText: "",
-      volume: 0.75,
+      volume: 0.01,
       currentTime: 0,
-      waiting: false
+      waiting: false,
+      audioPlayer: new Audio()
     };
 
-    this.audioPlayer = new Audio();
-    this.audioPlayer.volume = this.state.volume;
+    this.state.audioPlayer.volume = this.state.volume;
     this.songCardCallback = this.songCardCallback.bind(this);
     this.nextButtonCallback = this.nextButtonCallback.bind(this);
     this.previousButtonCallback = this.previousButtonCallback.bind(this);
@@ -33,26 +33,26 @@ export default class SongList extends React.Component {
 
     /** Audio Player Events */
     // Bind audio player events
-    this.audioPlayer.onended = () => {
+    this.state.audioPlayer.onended = () => {
       this.nextButtonCallback();
     };
 
-    this.audioPlayer.ontimeupdate = () => {
+    this.state.audioPlayer.ontimeupdate = () => {
       // re render with new time
       this.forceUpdate();
     };
 
-    this.audioPlayer.waiting = () => {
+    this.state.audioPlayer.waiting = () => {
       console.log("i am waiting");
       this.setState({ waiting: true, playing: false });
     };
 
-    this.audioPlayer.stalled = () => {
+    this.state.audioPlayer.stalled = () => {
       console.log("i am stalled");
       this.setState({ waiting: true, playing: false });
     };
 
-    this.audioPlayer.suspend = () => {
+    this.state.audioPlayer.suspend = () => {
       console.log("i am suspended");
       this.setState({ waiting: true, playing: false });
     };
@@ -68,11 +68,13 @@ export default class SongList extends React.Component {
    * @param {float between 0 and 1} value
    */
   onSeek(value) {
-    console.log("seeking: " + Math.floor(value * this.audioPlayer.duration));
-
-    this.audioPlayer.currentTime = Math.floor(
-      value * this.audioPlayer.duration
+    console.log(
+      "seeking: " + Math.floor(value * this.state.audioPlayer.duration)
     );
+
+    var seek = value * this.state.audioPlayer.duration;
+
+    this.state.audioPlayer.currentTime = Math.floor(seek ? seek : 0);
   }
 
   querySongs() {
@@ -90,14 +92,15 @@ export default class SongList extends React.Component {
 
   onVolumneChange(e) {
     let volumePercent = e.target.value;
-    this.audioPlayer.volume = volumePercent;
+    this.state.audioPlayer.volume = volumePercent;
   }
 
   songCardCallback(index) {
     this.setState({ playing: true, currentSong: index });
-    this.audioPlayer.src = "songs/" + this.state.songs[index].idsong + ".wav";
-    this.audioPlayer.load();
-    this.audioPlayer.play();
+    this.state.audioPlayer.src =
+      "songs/" + this.state.songs[index].idsong + ".wav";
+    this.state.audioPlayer.load();
+    this.state.audioPlayer.play();
   }
 
   nextButtonCallback() {
@@ -123,9 +126,9 @@ export default class SongList extends React.Component {
     this.setState({ playing: isPlaying });
 
     if (isPlaying) {
-      this.audioPlayer.play();
+      this.state.audioPlayer.play();
     } else {
-      this.audioPlayer.pause();
+      this.state.audioPlayer.pause();
     }
   }
 
@@ -137,7 +140,8 @@ export default class SongList extends React.Component {
 
     /* todo: figure out why the songlist's max height 
     must be declared within the render to display properly */
-    var currentTime = this.audioPlayer.currentTime / this.audioPlayer.duration;
+    var currentTime =
+      this.state.audioPlayer.currentTime / this.state.audioPlayer.duration;
 
     return (
       <div className="songListContainer">
@@ -168,26 +172,23 @@ export default class SongList extends React.Component {
           })}
         </ul>
 
-        <MusicProgress
-          clickCallback={this.onSeek}
-          value={currentTime}
-          className="playBar"
-        />
-
-        <Form inline>
+        <MusicProgress clickCallback={this.onSeek} value={currentTime} />
+        <Form inline className="listControls">
           <div>
             <Button onClick={this.previousButtonCallback}>&#60;</Button>
-            <Button onClick={this.playButtonCallback}>{text}</Button>
+            <Button style={{ width: "4em" }} onClick={this.playButtonCallback}>
+              {text}
+            </Button>
             <Button onClick={this.nextButtonCallback}>&#62;</Button>
           </div>
           <FormControl
+            className="volumeBar"
             type="range"
             min={0}
             max={1}
             step={0.01}
-            defaultValue={this.audioPlayer.volume}
+            defaultValue={this.state.audioPlayer.volume}
             onChange={this.onVolumneChange}
-            style={{ margin: ".5em" }}
           />
         </Form>
       </div>

@@ -22,17 +22,8 @@ export default class SongCard extends React.Component {
       <Media
         className="songCard"
         as="li"
-        style={{
-          backgroundColor: backgroundColor,
-          border: "solid thin black",
-          borderRadius: ".3em",
-          margin: ".3em",
-          height: 64,
-          cursor: "pointer",
-          transition: "all .2s ease-in-out",
-          zIndex: "auto"
-        }}
         onClick={this.onCardClicked}
+        style={{ backgroundColor: backgroundColor }}
       >
         <img
           width={64}
