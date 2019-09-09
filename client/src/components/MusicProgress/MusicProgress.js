@@ -56,6 +56,10 @@ export default class MusicProgress extends React.Component {
     var mid = "0%";
     var leftWidth = "0%";
 
+    var c1 = this.getRandomColor();
+    var c2 = this.getRandomColor();
+    var c3 = this.getRandomColor();
+
     if (this.props.value) {
       mid = 0.005;
       leftWidth = ((this.props.value - mid) * 100).toString() + "%";

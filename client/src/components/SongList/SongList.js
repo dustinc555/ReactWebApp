@@ -5,7 +5,6 @@ import MusicProgress from "../MusicProgress/MusicProgress";
 import "./SongList.css";
 
 import { Button, Form, FormControl } from "react-bootstrap";
-import { Container } from "react-bootstrap";
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -15,7 +14,7 @@ export default class SongList extends React.Component {
       playing: false,
       currentSong: null,
       queryText: "",
-      volume: 0.01,
+      volume: 0.5,
       currentTime: 0,
       waiting: false,
       audioPlayer: new Audio()
@@ -173,6 +172,7 @@ export default class SongList extends React.Component {
         </ul>
 
         <MusicProgress clickCallback={this.onSeek} value={currentTime} />
+
         <Form inline className="listControls">
           <div>
             <Button onClick={this.previousButtonCallback}>&#60;</Button>

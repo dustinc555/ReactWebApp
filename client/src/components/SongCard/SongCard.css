@@ -4,8 +4,4 @@
   height: 4em;
   cursor: "pointer";
   transition: "all .2s ease-in-out";
-  z-index: "auto";
-}
-.songCard:hover {
-  transform: scale(1.01);
 }
