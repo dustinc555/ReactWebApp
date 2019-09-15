@@ -36,17 +36,19 @@ and several other community packages accesable through npm.
 
    `npm start` the server defaults to port 3001 because the clients development server runs on port 3000.
 
+   The express server will now serve the react client.
+
 ## Client
 
 ### create-react-app
 
-The client was made using the package [Create React App](https://create-react-app.dev/)
+The client was made using [Create React App](https://create-react-app.dev/).
 
 ### Development Server
 
 The react client has its own development server that proxies to the express server at port `3001` however if no data is being retreived or moved around the server it is not needed to work on the aesthetic of the client.
 
-### Deployment
+It is started from within the client folder by running: `npm start`.
 
 ## Server
 
