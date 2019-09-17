@@ -14,30 +14,6 @@ and several other community packages accesable through npm.
 
 ### [My server](http://react-media-app.duckdns.org/)
 
-### Deploying on your own machine
-
-1. Clone the repo: `git clone https://github.com/dustinc555/react_web_app.git`
-
-2. Build the client:
-
-   `cd react_web_app`
-
-   `cd client`
-
-   `npm install` (client dependencies)
-
-   `npm run-script build`
-
-   <b>Building the app is required before starting the express server.</b>
-
-3. In order to start the server, navigate to the root directory and run:
-
-   `npm install` (server dependencies)
-
-   `npm start` the server defaults to port 3001 because the clients development server runs on port 3000.
-
-   The express server will now serve the react client.
-
 ## Client
 
 ### create-react-app
