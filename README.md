@@ -1,4 +1,4 @@
-# React Media App
+# React Media Player
 
 ## Hi
 
